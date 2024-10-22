@@ -37,7 +37,7 @@
   <RpcSelector />
   </div>
 
-  <h1 style="margin: 0em;">🔬Account microscope</h1>
+  <h1 style="margin: 0em;">🌘Account microscope <span style="background-color: black; color: white; padding: 5px 10px; font-size: smaller;">for <span style="color: #a0fea0;">E</span>clipse</span></h1>
   <div style="font-size: small; margin-bottom: 10px;">
   Account microscope is open source. 
   If you are interested in how they are derived, <a href="https://github.com/everlastingsong/account-microscope/tree/main/src/libs" target="_blank">please check the code</a> 👍
