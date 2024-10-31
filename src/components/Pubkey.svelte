@@ -9,6 +9,27 @@
   export let length: number = 5;
   export let type: string = "generic";
 
+  function getExplorerURL(address: Address): string {
+    if ( !address ) return "";
+
+    const explorerBaseUrl = "https://explorer.dev.eclipsenetwork.xyz/address";
+    const rpc = getRPC();
+
+    let querystring = "";
+    if (rpc.network === "devnet") {
+      querystring = "?cluster=devnet";
+    }
+    if (rpc.network === "localnet") {
+      querystring = `?cluster=custom&customUrl=${rpc.url}`;
+    }
+    if (rpc.network === "custom") {
+      // pass (don't include custom RPC URL, treat it as mainnet)
+    }
+
+    const url = `${explorerBaseUrl}/${address.toString()}${querystring}`;
+    return url;
+  }
+
   function getSolscanURL(address: Address): string {
     if ( !address ) return "";
 
@@ -84,8 +105,9 @@
 </a>
 <span bind:this={toolkit} style="visibility: hidden;">
   {#if address}
-  <a target="_blank" rel="noreferrer" href={getSolscanURL(address)}>🔍</a>
-  <a target="_blank" rel="noreferrer" href={getSolanaFmURL(address)}>📻</a>
+  <a target="_blank" rel="noreferrer" href={getExplorerURL(address)}>🔭</a>
+  <!--a target="_blank" rel="noreferrer" href={getSolscanURL(address)}>🔍</a-->
+  <!--a target="_blank" rel="noreferrer" href={getSolanaFmURL(address)}>📻</a-->
   <a href="#/generic/{address}">🪣</a>
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <span bind:this={clipboard} on:click={copy}>📎</span>
