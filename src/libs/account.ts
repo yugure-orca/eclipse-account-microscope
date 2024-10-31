@@ -71,7 +71,16 @@ export function toAccountJSON(meta: AccountMetaInfo, embedSlotContext: boolean):
 export function getMinimumBalanceForRentExemption(dataLength: number): number {
   // https://docs.rs/solana-program/latest/src/solana_program/rent.rs.html#73-77
   const ACCOUNT_STORAGE_OVERHEAD = 128;
-  const LAMPORTS_PER_BYTE_YEAR = 3480; // 3480 lampores per byte per year
+  // curl $RPC_URL -X POST -H "Content-Type: application/json" -d '
+  // {
+  //   "jsonrpc": "2.0", "id": 1,
+  //   "method": "getMinimumBalanceForRentExemption",
+  //   "params": [0]
+  // }
+  // '
+  // -> 8704
+  // 8704 / ACCOUNT_STORAGE_OVERHEAD(128) / EXEMPTION_THRESHOLD(2) = 34
+  const LAMPORTS_PER_BYTE_YEAR = 34; // 34 lampores per byte per year (Eclipse setting)
   const EXEMPTION_THRESHOLD = 2; // 2 years
   return (ACCOUNT_STORAGE_OVERHEAD + dataLength) * LAMPORTS_PER_BYTE_YEAR * EXEMPTION_THRESHOLD;
 }
